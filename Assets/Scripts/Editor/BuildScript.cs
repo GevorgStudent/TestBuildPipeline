@@ -20,7 +20,7 @@ namespace UnityBuilderAction
             Dictionary<string, string> options = GetValidatedOptions();
 
             // Set version for this build
-            PlayerSettings.bundleVersion = "0.12.1";
+            PlayerSettings.bundleVersion = options["buildVersion"];
             PlayerSettings.macOS.buildNumber = options["buildVersion"];
             PlayerSettings.Android.bundleVersionCode = int.Parse(options["androidVersionCode"]);
 
