@@ -1,6 +1,12 @@
 name: Build project
 
-on: [push]
+on: 
+workflow_dispatch:
+    inputs:
+      version:
+        description: "Version of the build"
+        required: true
+        type: string
 
 jobs:
   buildForAllSupportedPlatforms:
@@ -26,7 +32,7 @@ jobs:
           UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
         with:
           targetPlatform: ${{ matrix.targetPlatform }}
-          customParameters: -buildVersion ${{ 1.03.2 }}
+          customParameters: -buildVersion ${{ github.event.inputs.version }}
       - uses: actions/upload-artifact@v2
         with:
           name: Build-${{ matrix.targetPlatform }}
