@@ -1,7 +1,7 @@
 name: Build project
 
 on: 
-  workflow_dispatch:
+ workflow_dispatch:
     inputs:
       version:
         description: "Version of the build"
@@ -16,7 +16,13 @@ jobs:
       fail-fast: false
       matrix:
         targetPlatform:
-          - Android # Build an Android .apk standalone app.
+          # - StandaloneOSX # Build a macOS standalone (Intel 64-bit).
+          # - StandaloneWindows # Build a Windows standalone.
+          # - StandaloneWindows64 # Build a Windows 64-bit standalone.
+          # - StandaloneLinux64 # Build a Linux 64-bit standalone.
+          # - iOS # Build an iOS player.
+          # - Android # Build an Android .apk standalone app.
+          - WebGL # WebGL.
     steps:
       - uses: actions/checkout@v2
         with:
@@ -33,6 +39,7 @@ jobs:
         with:
           targetPlatform: ${{ matrix.targetPlatform }}
           customParameters: -buildVersion ${{ github.event.inputs.version }}
+
       - uses: actions/upload-artifact@v2
         with:
           name: Build-${{ matrix.targetPlatform }}
